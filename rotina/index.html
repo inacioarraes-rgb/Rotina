@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f5ead8">
+<title>Rotina</title>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#f5ead8"/><circle cx="50" cy="50" r="22" fill="#c67139"/><circle cx="64" cy="38" r="9" fill="#7a8a5e"/></svg></template>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-c6f97bc4-95fc-4f5c-aad3-86af74ed045e/styles.css">
+<script src="_ds/organic-c6f97bc4-95fc-4f5c-aad3-86af74ed045e/_ds_bundle.js"></script>
+<style>body{margin:0;background:var(--color-neutral-300)}a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}@media (max-width:500px){[data-shell]{padding:0!important;min-height:100dvh!important}[data-phone]{width:100vw!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important;padding-top:env(safe-area-inset-top)}[data-statusbar],[data-side]{display:none!important}[data-login]{top:0!important}}</style>
+</helmet>
+<div data-shell="" style="min-height:100vh;display:flex;align-items:center;justify-content:center;gap:48px;padding:32px 16px;flex-wrap:wrap;font-family:var(--font-body);color:var(--color-text)">
+
+<div data-phone="" style="width:390px;height:844px;flex:none;background:var(--color-bg);border-radius:52px;box-shadow:var(--shadow-lg),0 0 0 10px var(--color-neutral-900);overflow:hidden;display:flex;flex-direction:column;position:relative">
+
+<div data-statusbar="" style="height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font-size:15px;font-weight:700">
+<span>{{ clock }}</span>
+<span style="width:110px;height:30px;border-radius:999px;background:var(--color-neutral-900)"></span>
+<span style="display:flex;gap:5px;align-items:center"><span style="width:18px;height:10px;border-radius:3px;border:2px solid var(--color-text)"></span></span>
+</div>
+
+<sc-if value="{{ isLogin }}">
+<div data-login="" style="position:absolute;inset:48px 0 0 0;z-index:5;background:var(--color-bg);overflow:hidden;display:flex;flex-direction:column;padding:40px 28px 40px">
+<span style="position:absolute;width:260px;height:260px;border-radius:50%;background:var(--color-accent-300);top:-90px;right:-110px"></span>
+<span style="position:absolute;width:150px;height:150px;border-radius:50%;background:var(--color-accent-2-300);top:110px;right:40px"></span>
+<span style="position:absolute;width:70px;height:70px;border-radius:50%;background:var(--color-accent-500);top:70px;right:170px"></span>
+<div style="position:relative;margin-top:230px;display:flex;flex-direction:column;gap:8px">
+<h1 style="margin:0;font-size:52px">Rotina</h1>
+<p style="margin:0;font-size:16px;color:var(--color-neutral-800);max-width:270px">Sua semana em blocos, sem decidir duas vezes.</p>
+</div>
+
+<sc-if value="{{ loginIsEmail }}">
+<div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Como quer ser chamado?
+<input class="input" value="{{ nameDraft }}" onChange="{{ onName }}" onKeyDown="{{ onNameKey }}" placeholder="Seu nome" style="padding:14px 18px;font-size:15px"></label>
+<button class="btn btn-primary btn-block" style="padding:15px;font-size:15px" onClick="{{ saveName }}">Começar</button>
+<span style="font-size:12px;color:var(--color-neutral-700);text-align:center">Fica salvo só neste aparelho.</span>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isFoco }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;overflow-y:auto;padding:10px 22px 24px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600;color:var(--color-neutral-700)">{{ todayLabel }}</span><h2 style="margin:0;font-size:34px">Foco</h2></div>
+<button style="border:0;cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 12px 4px 4px;border-radius:999px;background:var(--color-surface);font:600 12px var(--font-body);color:var(--color-neutral-800)" onClick="{{ editName }}"><span style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-2-500);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700">{{ initial }}</span>{{ firstName }}</button></div>
+
+<sc-if value="{{ showMonth }}">
+<div style="flex:none;background:var(--color-accent-2-200);border-radius:var(--radius-lg);padding:18px 20px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden">
+<span style="position:absolute;width:110px;height:110px;border-radius:50%;background:var(--color-accent-2-300);top:-40px;right:-30px"></span>
+<div style="position:relative;display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-800)">Novo mês</span><strong style="font-family:var(--font-heading);font-weight:400;font-size:24px;color:var(--color-accent-2-900)">{{ month.title }}</strong><span style="font-size:13px;font-weight:600;color:var(--color-accent-2-900)">{{ month.rate }} concluídos · {{ month.doneH }} feitas · {{ month.skipped }} pulados</span></div>
+<div style="position:relative;display:flex;gap:8px"><button class="btn btn-primary" style="white-space:nowrap;background:var(--color-accent-2-700);border-color:var(--color-accent-2-700)" onClick="{{ openMonth }}">Ver resumo</button><button class="btn btn-ghost" style="white-space:nowrap;color:var(--color-accent-2-900)" onClick="{{ seeMonth }}">Marcar como visto</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasPast }}">
+<div style="flex:none;background:var(--color-neutral-100);border-radius:var(--radius-lg);padding:12px 16px;display:flex;flex-direction:column;gap:10px;opacity:.85">
+<div style="display:flex;align-items:center;gap:12px">
+<span style="width:32px;height:32px;border-radius:50%;background:{{ pst.bg }};display:grid;place-items:center;flex:none"><span style="width:10px;height:10px;border-radius:50%;background:{{ pst.base }}"></span></span>
+<div style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">{{ pst.label }}</span><strong style="font-size:14px">{{ pst.title }}</strong><span style="font-size:12px;color:var(--color-neutral-700)">{{ pst.time }} · {{ pst.catLabel }}</span></div>
+</div>
+<sc-if value="{{ pst.showActs }}"><div style="display:flex;gap:6px"><button class="btn btn-secondary" style="flex:1;padding:8px 12px;font-size:13px" onClick="{{ pst.onDone }}">Concluído</button><button class="btn btn-ghost" style="flex:1;padding:8px 12px;font-size:13px" onClick="{{ pst.onSkip }}">Pulado</button></div></sc-if>
+<sc-if value="{{ pst.showReasons }}"><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ pst.reasons }}" as="r"><button class="btn btn-secondary" style="white-space:nowrap;padding:7px 12px;font-size:13px" onClick="{{ r.onClick }}">{{ r.label }}</button></sc-for><button class="btn btn-ghost" style="padding:7px 12px;font-size:13px" onClick="{{ pst.onBack }}">Voltar</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasCurrent }}">
+<div style="flex:none;background:{{ cur.bg }};border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-md)">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:{{ cur.ink }}">Agora · {{ cur.time }}</span><span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:{{ cur.base }};color:#fff">{{ cur.catLabel }}</span></div>
+<div style="font-family:var(--font-heading);font-size:30px;line-height:1.1;color:{{ cur.ink }};text-wrap:pretty">{{ cur.title }}</div>
+<div style="height:10px;border-radius:999px;background:rgba(255,255,255,.65);overflow:hidden"><div style="height:100%;width:{{ cur.pct }};background:{{ cur.base }};border-radius:999px"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:{{ cur.ink }}"><span>{{ cur.statusLabel }}</span><span>faltam {{ cur.left }}</span></div>
+<sc-if value="{{ focusSkip }}">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600;color:{{ cur.ink }}">Por que pular?</span>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ focusReasons }}" as="r"><button class="btn btn-secondary" style="background:rgba(255,255,255,.7)" onClick="{{ r.onClick }}">{{ r.label }}</button></sc-for></div></div>
+</sc-if>
+<sc-if value="{{ noFocusSkip }}">
+<div style="display:flex;gap:10px"><button class="btn btn-primary" style="flex:1;padding:14px" onClick="{{ cur.onPrimary }}">{{ cur.primaryLabel }}</button><button class="btn btn-secondary" style="background:rgba(255,255,255,.7);padding:14px 20px" onClick="{{ onFocusSkip }}">Pular</button></div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ noCurrent }}">
+<div style="background:var(--color-surface);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:8px">
+<span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">Agora</span>
+<div style="font-family:var(--font-heading);font-size:30px;line-height:1.1">{{ freeTitle }}</div>
+<span style="font-size:14px;color:var(--color-neutral-800)">Nenhum bloco neste horário.</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasNext }}">
+<div style="flex:none;background:var(--color-neutral-100);border-radius:var(--radius-lg);padding:18px 20px;display:flex;align-items:center;gap:14px">
+<span style="width:44px;height:44px;border-radius:50%;background:{{ nxt.bg }};display:grid;place-items:center;flex:none"><span style="width:14px;height:14px;border-radius:50%;background:{{ nxt.base }}"></span></span>
+<div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">A seguir · {{ nxt.inLabel }}</span><strong style="font-size:17px">{{ nxt.title }}</strong><span style="font-size:13px;color:var(--color-neutral-700)">{{ nxt.time }} · {{ nxt.catLabel }}</span></div>
+</div>
+</sc-if>
+
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--color-neutral-700)"><span>Hoje</span><span>{{ dayDone }}</span></div>
+<div style="display:flex;gap:5px"><sc-for list="{{ dayDots }}" as="d"><span style="flex:1;height:8px;border-radius:999px;background:{{ d.bg }};opacity:{{ d.op }}"></span></sc-for></div>
+</div>
+
+<button class="btn btn-ghost" style="align-self:flex-start;margin-top:auto;background:var(--color-accent-2-200);color:var(--color-accent-2-900);padding:12px 18px" onClick="{{ goChat }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>Ajustar com a IA</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSemana }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+<div style="padding:10px 22px 12px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><h2 style="margin:0;font-size:34px">Semana</h2>
+<div style="display:flex;background:var(--color-surface);border-radius:999px;padding:4px"><sc-for list="{{ viewOpts }}" as="v"><button style="border:0;cursor:pointer;font:600 13px var(--font-body);padding:7px 14px;border-radius:999px;background:{{ v.bg }};color:{{ v.color }}" onClick="{{ v.onClick }}">{{ v.label }}</button></sc-for></div></div>
+<div style="display:flex;align-items:center;gap:6px">
+<button class="btn btn-secondary btn-icon" style="width:36px;height:36px;padding:0;flex:none" onClick="{{ prevWk }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+<span style="flex:1;min-width:0;text-align:center;font-size:14px;font-weight:700">{{ wkLabel }}</span>
+<button class="btn btn-secondary btn-icon" style="width:36px;height:36px;padding:0;flex:none" onClick="{{ nextWk }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+<sc-if value="{{ notCurWk }}"><button class="btn btn-ghost" style="padding:7px 12px;font-size:13px;flex:none" onClick="{{ goToday }}">Hoje</button></sc-if>
+<button class="btn btn-primary btn-icon" style="width:36px;height:36px;padding:0;flex:none" onClick="{{ newBlock }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"><sc-for list="{{ dayChips }}" as="c"><button style="border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font-family:var(--font-body)" onClick="{{ c.onClick }}"><span style="font-size:11px;font-weight:600">{{ c.label }}</span><span style="font-size:17px;font-weight:700">{{ c.num }}</span><span style="width:5px;height:5px;border-radius:50%;background:{{ c.dot }}"></span></button></sc-for></div>
+</div>
+
+<sc-if value="{{ isDayView }}">
+<div ref="{{ dayRef }}" style="flex:1;overflow-y:auto;position:relative">
+<div style="position:relative;height:{{ dayHeight }};margin:0 0 24px">
+<sc-for list="{{ hours }}" as="h"><div style="position:absolute;left:0;right:0;top:{{ h.top }};display:flex;align-items:center;gap:8px;padding-left:18px"><span style="font-size:11px;font-weight:600;color:var(--color-neutral-600);width:34px">{{ h.label }}</span><span style="flex:1;height:1px;background:var(--color-divider)"></span></div></sc-for>
+<sc-for list="{{ slots }}" as="sl"><button style="position:absolute;left:62px;right:16px;top:{{ sl.top }};height:{{ sl.h }};border:0;padding:0;background:transparent;cursor:pointer;border-radius:12px" style-hover="background:var(--color-accent-100)" onClick="{{ sl.onClick }}"></button></sc-for>
+<sc-for list="{{ dayBlocks }}" as="b"><button style="position:absolute;left:62px;right:16px;top:{{ b.top }};height:{{ b.h }};border:0;cursor:pointer;text-align:left;background:{{ b.bg }};border-radius:16px;padding:6px 12px;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;opacity:{{ b.op }};box-shadow:{{ b.ring }};font-family:var(--font-body);color:{{ b.ink }}" onClick="{{ b.onClick }}"><span style="display:flex;justify-content:space-between;gap:6px;width:100%"><strong style="font-size:14px;text-decoration:{{ b.deco }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.title }}</strong><span style="font-size:11px;font-weight:700;flex:none">{{ b.badge }}</span></span><span style="font-size:12px;font-weight:600">{{ b.time }}</span></button></sc-for>
+<sc-if value="{{ showNow }}"><div style="position:absolute;left:52px;right:10px;top:{{ nowTop }};height:2px;background:var(--color-accent-600);pointer-events:none"><span style="position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--color-accent-600)"></span></div></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWeekView }}">
+<div style="flex:1;overflow-y:auto;padding:0 14px 24px">
+<div style="display:grid;grid-template-columns:30px repeat(7,1fr);gap:4px;position:relative">
+<div style="position:relative;height:{{ weekHeight }}"><sc-for list="{{ weekHours }}" as="h"><span style="position:absolute;top:{{ h.top }};font-size:10px;font-weight:600;color:var(--color-neutral-600)">{{ h.label }}</span></sc-for></div>
+<sc-for list="{{ weekCols }}" as="col"><button style="position:relative;height:{{ weekHeight }};border:0;padding:0;cursor:pointer;background:{{ col.bg }};border-radius:12px" onClick="{{ col.onClick }}"><sc-for list="{{ col.blocks }}" as="b"><span style="position:absolute;left:2px;right:2px;top:{{ b.top }};height:{{ b.h }};background:{{ b.base }};opacity:{{ b.op }};border-radius:6px"></span></sc-for></button></sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px 14px;padding:16px 4px 0"><sc-for list="{{ legend }}" as="l"><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600"><span style="width:10px;height:10px;border-radius:50%;background:{{ l.base }}"></span>{{ l.label }}</span></sc-for></div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isChat }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+<div style="padding:10px 22px 8px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end"><h2 style="margin:0;font-size:34px">Chat</h2><span class="tag tag-accent-2">{{ ctxLabel }}</span></div>
+<button style="align-self:flex-start;border:0;cursor:pointer;display:flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:999px;background:{{ aiPill.bg }};color:{{ aiPill.color }};font:600 12px var(--font-body)" onClick="{{ openSettings }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ aiPill.dot }}"></span>{{ aiPill.label }}</button>
+</div>
+<div ref="{{ chatRef }}" style="flex:1;overflow-y:auto;padding:6px 18px 12px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ msgs }}" as="m"><div style="display:flex;flex-direction:column;align-items:{{ m.align }};gap:6px">
+<sc-if value="{{ m.hasText }}"><div style="max-width:84%;padding:11px 15px;border-radius:22px;background:{{ m.bg }};color:{{ m.color }};font-size:15px;line-height:1.45;white-space:pre-line">{{ m.text }}</div></sc-if>
+<sc-if value="{{ m.hasCard }}"><div style="width:84%;background:var(--color-neutral-100);border-radius:22px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-sm);opacity:{{ m.card.op }}">
+<div style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:{{ m.card.dot }}"></span><span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">{{ m.card.kicker }}</span></div>
+<strong style="font-size:15px">{{ m.card.title }}</strong><span style="font-size:13px;color:var(--color-neutral-700)">{{ m.card.sub }}</span>
+<sc-if value="{{ m.card.canUndo }}"><button class="btn btn-ghost" style="align-self:flex-start;padding:6px 12px;font-size:13px" onClick="{{ m.onUndo }}">Desfazer</button></sc-if>
+<sc-if value="{{ m.card.isProposed }}"><div style="display:flex;gap:8px"><button class="btn btn-primary" style="padding:8px 14px;font-size:13px" onClick="{{ m.onConfirm }}">Confirmar</button><button class="btn btn-secondary" style="padding:8px 14px;font-size:13px" onClick="{{ m.onDiscard }}">Descartar</button></div></sc-if>
+<sc-if value="{{ m.card.isNav }}"><button class="btn btn-primary" style="align-self:flex-start;padding:8px 14px;font-size:13px" onClick="{{ goCheck }}">Abrir CHECK</button></sc-if>
+</div></sc-if>
+</div></sc-for>
+<sc-if value="{{ typing }}"><div style="align-self:flex-start;padding:12px 16px;border-radius:22px;background:var(--color-surface);display:flex;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:var(--color-neutral-700);animation:blink 1.2s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--color-neutral-700);animation:blink 1.2s .2s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--color-neutral-700);animation:blink 1.2s .4s infinite"></span></div></sc-if>
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;padding:4px 18px 10px;flex:none"><sc-for list="{{ suggestions }}" as="s"><button class="btn btn-secondary" style="white-space:nowrap;padding:7px 13px;font-size:13px;font-family:var(--font-body);font-weight:600" onClick="{{ s.onClick }}">{{ s.label }}</button></sc-for></div>
+<div style="display:flex;gap:8px;padding:0 18px 12px;flex:none">
+<input class="input" style="flex:1;min-width:0" value="{{ input }}" onChange="{{ onInput }}" onKeyDown="{{ onKey }}" placeholder="Ex.: move o treino de amanhã para 18h">
+<button class="btn btn-primary btn-icon" style="width:46px;height:46px;flex:none;padding:0" onClick="{{ send }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCheck }}">
+<div style="flex:1;overflow-y:auto;padding:10px 22px 28px;display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600;color:var(--color-neutral-700)">{{ weekRange }}</span><h2 style="margin:0;font-size:34px">CHECK semanal</h2></div>
+
+<div style="display:flex;gap:12px">
+<div style="flex:1;background:var(--color-accent-2-200);border-radius:var(--radius-lg);padding:18px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:34px;color:var(--color-accent-2-900)">{{ metrics.rate }}</span><span style="font-size:13px;font-weight:600;color:var(--color-accent-2-900)">dos blocos concluídos</span></div>
+<div style="flex:1;background:var(--color-accent-200);border-radius:var(--radius-lg);padding:18px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:34px;color:var(--color-accent-900)">{{ metrics.skipped }}</span><span style="font-size:13px;font-weight:600;color:var(--color-accent-900)">blocos pulados</span></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<h4 style="margin:0">Horas por categoria</h4>
+<sc-for list="{{ metrics.cats }}" as="c"><div style="display:flex;flex-direction:column;gap:5px">
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600"><span>{{ c.label }}</span><span style="color:var(--color-neutral-700)">{{ c.done }} de {{ c.plan }}</span></div>
+<div style="height:10px;border-radius:999px;background:{{ c.bg }};overflow:hidden"><div style="height:100%;width:{{ c.pct }};background:{{ c.base }};border-radius:999px"></div></div>
+<sc-if value="{{ c.hasNote }}"><span style="font-size:12px;color:var(--color-neutral-700)">{{ c.note }}</span></sc-if>
+</div></sc-for>
+</div>
+
+<sc-if value="{{ metrics.hasSkips }}"><div style="display:flex;flex-direction:column;gap:8px">
+<h4 style="margin:0">Motivos dos pulos</h4>
+<sc-for list="{{ metrics.skips }}" as="s"><div style="display:flex;justify-content:space-between;gap:8px;font-size:14px;background:var(--color-neutral-100);border-radius:16px;padding:10px 14px"><span><strong>{{ s.title }}</strong> · {{ s.day }}</span><span style="color:var(--color-accent-700);font-weight:600">{{ s.reason }}</span></div></sc-for>
+</div></sc-if>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<h4 style="margin:0">Checklist de domingo</h4>
+<sc-for list="{{ checklist }}" as="i"><button style="display:flex;align-items:center;gap:12px;border:0;cursor:pointer;text-align:left;background:var(--color-neutral-100);border-radius:999px;padding:10px 14px 10px 10px;font:500 14px var(--font-body);color:var(--color-text)" onClick="{{ i.onClick }}"><span style="width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;background:{{ i.boxBg }};border:2px solid {{ i.boxBorder }};color:#fff;font-size:14px;font-weight:700">{{ i.mark }}</span><span style="text-decoration:{{ i.deco }}">{{ i.label }}</span></button></sc-for>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<h4 style="margin:0">Reflexão</h4>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">O que funcionou?<textarea class="input" style="border-radius:20px;min-height:70px;resize:none;font-family:var(--font-body)" value="{{ answers.a }}" onChange="{{ onAnsA }}"></textarea></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">O que travou?<textarea class="input" style="border-radius:20px;min-height:70px;resize:none;font-family:var(--font-body)" value="{{ answers.b }}" onChange="{{ onAnsB }}"></textarea></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Ajuste para a próxima semana<textarea class="input" style="border-radius:20px;min-height:70px;resize:none;font-family:var(--font-body)" value="{{ answers.c }}" onChange="{{ onAnsC }}"></textarea></label>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<h4 style="margin:0">Notas da semana</h4>
+<sc-for list="{{ notes }}" as="n"><div style="background:var(--color-neutral-100);border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-2-700)">{{ n.meta }}</span><span style="font-size:14px">{{ n.text }}</span></div></sc-for>
+</div>
+
+<button class="btn btn-primary btn-block" style="padding:15px" onClick="{{ onFinishReview }}">{{ reviewBtn }}</button>
+</div>
+</sc-if>
+
+<div style="flex:none;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 10px 26px;background:var(--color-neutral-100);border-top:1px solid var(--color-divider)">
+<sc-for list="{{ tabs }}" as="t"><button style="border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;color:{{ t.color }};font:600 11px var(--font-body)" onClick="{{ t.onClick }}"><span style="width:56px;height:32px;border-radius:999px;display:grid;place-items:center;background:{{ t.bg }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.d }}"></path></svg></span>{{ t.label }}</button></sc-for>
+</div>
+
+<sc-if value="{{ settingsOpen }}">
+<div style="position:absolute;inset:0;z-index:6;background:rgba(32,30,29,.35);display:flex;align-items:flex-end" onClick="{{ closeSettings }}">
+<div style="width:100%;background:var(--color-bg);border-radius:32px 32px 0 0;padding:12px 22px 34px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-lg)" onClick="{{ stop }}">
+<span style="align-self:center;width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400)"></span>
+<div style="display:flex;flex-direction:column;gap:4px"><h3 style="margin:0">IA do chat</h3><span style="font-size:14px;color:var(--color-neutral-800)">Cole uma chave gratuita do Gemini. Ela fica salva só neste aparelho. Sem chave, o chat usa o modo local por regras.</span></div>
+<a href="https://aistudio.google.com/apikey" target="_blank" style="font-size:14px;font-weight:600">Criar chave no Google AI Studio →</a>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Chave da API
+<input class="input" type="password" value="{{ keyDraft }}" onChange="{{ onKey2 }}" placeholder="AIza…" style="padding:13px 18px"></label>
+<sc-if value="{{ hasModels }}"><label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Modelo
+<select class="input" value="{{ modelDraft }}" onChange="{{ onModel }}" style="padding:13px 18px"><sc-for list="{{ models }}" as="mo"><option value="{{ mo.id }}">{{ mo.id }}</option></sc-for></select></label>
+<span style="font-size:12px;color:var(--color-neutral-700)">Modelos "flash-lite" têm a maior cota diária gratuita.</span></sc-if>
+<sc-if value="{{ hasSettingsMsg }}"><span style="font-size:13px;font-weight:600;color:var(--color-accent-700)">{{ settingsMsg }}</span></sc-if>
+<div style="display:flex;gap:8px">
+<sc-if value="{{ noModels }}"><button class="btn btn-primary" style="flex:1;padding:14px" onClick="{{ testKey }}">{{ testLabel }}</button></sc-if>
+<sc-if value="{{ hasModels }}"><button class="btn btn-primary" style="flex:1;padding:14px" onClick="{{ saveAI }}">Salvar</button></sc-if>
+<sc-if value="{{ hasKey }}"><button class="btn btn-ghost" style="color:var(--color-accent-700)" onClick="{{ disconnectAI }}">Desconectar</button></sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasSheet }}">
+<div style="position:absolute;inset:0;background:rgba(32,30,29,.35);display:flex;align-items:flex-end" onClick="{{ closeSheet }}">
+<div style="width:100%;background:var(--color-bg);border-radius:32px 32px 0 0;padding:12px 22px 34px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-lg)" onClick="{{ stop }}">
+<span style="align-self:center;width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400)"></span>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="align-self:flex-start;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:{{ sheet.bg }};color:{{ sheet.ink }}">{{ sheet.catLabel }}</span><h3 style="margin:0">{{ sheet.title }}</h3><span style="font-size:14px;color:var(--color-neutral-700)">{{ sheet.time }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><sc-for list="{{ sheet.opts }}" as="o"><button style="border:2px solid {{ o.border }};cursor:pointer;border-radius:999px;padding:10px;background:{{ o.bg }};color:{{ o.color }};font:600 14px var(--font-body)" onClick="{{ o.onClick }}">{{ o.label }}</button></sc-for></div>
+<sc-if value="{{ sheet.showReasons }}"><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600">Motivo</span><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ sheet.reasons }}" as="r"><button class="btn btn-secondary" style="padding:8px 14px;font-size:13px" onClick="{{ r.onClick }}">{{ r.label }}</button></sc-for></div></div></sc-if>
+<sc-if value="{{ sheet.isRec }}"><span style="font-size:13px;font-weight:600;color:var(--color-accent-2-800)">{{ sheet.recLabel }}</span></sc-if>
+<div style="display:flex;gap:8px"><button class="btn btn-secondary" style="flex:1" onClick="{{ sheet.onDelay }}">Adiar 30 min</button><button class="btn btn-secondary" style="flex:1" onClick="{{ sheet.onEdit }}">Editar</button><button class="btn btn-ghost" style="flex:1;color:var(--color-accent-700)" onClick="{{ sheet.onCancel }}">Excluir</button></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasDelAsk }}">
+<div style="position:absolute;inset:0;z-index:8;background:rgba(32,30,29,.4);display:grid;place-items:center;padding:24px" onClick="{{ delCancel }}">
+<div style="width:100%;background:var(--color-bg);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow-lg)" onClick="{{ stop }}">
+<h3 style="margin:0 0 4px">Excluir bloco que se repete</h3>
+<button class="btn btn-secondary btn-block" onClick="{{ delOne }}">Só este</button>
+<button class="btn btn-primary btn-block" onClick="{{ delFuture }}">Este e os próximos</button>
+<button class="btn btn-ghost btn-block" onClick="{{ delCancel }}">Cancelar</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ monthOpen }}">
+<div style="position:absolute;inset:0;z-index:6;background:rgba(32,30,29,.35);display:flex;align-items:flex-end" onClick="{{ closeMonth }}">
+<div style="width:100%;max-height:92%;overflow-y:auto;background:var(--color-bg);border-radius:32px 32px 0 0;padding:12px 22px 34px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-lg)" onClick="{{ stop }}">
+<span style="align-self:center;width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400)"></span>
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600;color:var(--color-neutral-700)">{{ month.total }} blocos planejados · {{ month.notes }} notas</span><h3 style="margin:0">{{ month.cap }}</h3></div>
+<div style="display:flex;gap:10px">
+<div style="flex:1;background:var(--color-accent-2-200);border-radius:var(--radius-lg);padding:14px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:28px;color:var(--color-accent-2-900)">{{ month.rate }}</span><span style="font-size:12px;font-weight:600;color:var(--color-accent-2-900)">concluídos</span></div>
+<div style="flex:1;background:var(--color-accent-200);border-radius:var(--radius-lg);padding:14px;display:flex;flex-direction:column"><span style="font-family:var(--font-heading);font-size:28px;color:var(--color-accent-900)">{{ month.skipped }}</span><span style="font-size:12px;font-weight:600;color:var(--color-accent-900)">pulados</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px"><h4 style="margin:0">Horas por categoria</h4>
+<sc-for list="{{ month.cats }}" as="c"><div style="display:flex;flex-direction:column;gap:5px">
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600"><span>{{ c.label }}</span><span style="color:var(--color-neutral-700)">{{ c.done }} de {{ c.plan }}</span></div>
+<div style="height:8px;border-radius:999px;background:{{ c.bg }};overflow:hidden"><div style="height:100%;width:{{ c.pct }};background:{{ c.base }};border-radius:999px"></div></div>
+</div></sc-for></div>
+<sc-if value="{{ month.hasReasons }}"><div style="display:flex;flex-direction:column;gap:8px"><h4 style="margin:0">Motivos dos pulos</h4>
+<sc-for list="{{ month.reasons }}" as="r"><div style="display:flex;justify-content:space-between;font-size:14px;background:var(--color-neutral-100);border-radius:16px;padding:10px 14px"><span>{{ r.label }}</span><strong style="color:var(--color-accent-700)">{{ r.n }}</strong></div></sc-for></div></sc-if>
+<button class="btn btn-primary btn-block" style="padding:15px" onClick="{{ seeMonth }}">Marcar como visto</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasEditor }}">
+<div style="position:absolute;inset:0;z-index:6;background:rgba(32,30,29,.35);display:flex;align-items:flex-end" onClick="{{ closeEditor }}">
+<div style="width:100%;max-height:92%;overflow-y:auto;background:var(--color-bg);border-radius:32px 32px 0 0;padding:12px 22px 34px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-lg)" onClick="{{ stop }}">
+<span style="align-self:center;width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400)"></span>
+<h3 style="margin:0">{{ ed.heading }}</h3>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Título
+<input class="input" value="{{ ed.title }}" onChange="{{ ed.onTitle }}" onKeyDown="{{ ed.onTitleKey }}" placeholder="Ex.: Deep work" style="padding:13px 18px"></label>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Categoria</span>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ ed.cats }}" as="c"><button style="display:flex;align-items:center;gap:6px;border:2px solid {{ c.border }};cursor:pointer;border-radius:999px;padding:7px 12px;background:{{ c.bg }};color:{{ c.color }};font:600 13px var(--font-body)" onClick="{{ c.onClick }}"><span style="width:9px;height:9px;border-radius:50%;background:{{ c.dot }}"></span>{{ c.label }}</button></sc-for></div></div>
+<sc-if value="{{ ed.isRec }}"><div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Alterar</span>
+<div style="display:flex;gap:6px"><sc-for list="{{ ed.scopes }}" as="o"><button style="flex:1;border:0;cursor:pointer;border-radius:999px;padding:10px 12px;background:{{ o.bg }};color:{{ o.color }};font:600 13px var(--font-body)" onClick="{{ o.onClick }}">{{ o.label }}</button></sc-for></div></div></sc-if>
+<sc-if value="{{ ed.showRep }}"><div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Repetir</span>
+<div style="display:flex;gap:6px"><sc-for list="{{ ed.reps }}" as="o"><button style="flex:1;border:0;cursor:pointer;border-radius:999px;padding:10px 12px;background:{{ o.bg }};color:{{ o.color }};font:600 13px var(--font-body)" onClick="{{ o.onClick }}">{{ o.label }}</button></sc-for></div></div></sc-if>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:13px;font-weight:600">{{ ed.dayLabel }}</span>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"><sc-for list="{{ ed.days }}" as="d"><button style="border:0;cursor:pointer;border-radius:999px;padding:9px 0;background:{{ d.bg }};color:{{ d.color }};font:600 12px var(--font-body)" onClick="{{ d.onClick }}">{{ d.label }}</button></sc-for></div>
+<sc-if value="{{ ed.weekly }}"><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ ed.presets }}" as="p"><button class="btn btn-ghost" style="padding:6px 12px;font-size:12px;white-space:nowrap;background:var(--color-accent-2-100);color:var(--color-accent-2-800)" onClick="{{ p.onClick }}">{{ p.label }}</button></sc-for></div>
+<span style="font-size:12px;color:var(--color-neutral-700)">{{ ed.repHint }}</span></sc-if>
+</div>
+<div style="display:flex;gap:10px">
+<label style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Início<input class="input" type="time" value="{{ ed.start }}" onChange="{{ ed.onStart }}" style="padding:12px 16px"></label>
+<label style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Fim<input class="input" type="time" value="{{ ed.end }}" onChange="{{ ed.onEnd }}" style="padding:12px 16px"></label>
+</div>
+<sc-if value="{{ ed.hasErr }}"><span style="font-size:13px;font-weight:600;color:var(--color-accent-700)">{{ ed.err }}</span></sc-if>
+<div style="display:flex;gap:8px"><button class="btn btn-primary" style="flex:1;padding:14px" onClick="{{ ed.onSave }}">Salvar</button>
+<sc-if value="{{ ed.isEdit }}"><button class="btn btn-ghost" style="color:var(--color-accent-700)" onClick="{{ ed.onDelete }}">Excluir</button></sc-if></div>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<div data-side="" style="max-width:300px;display:flex;flex-direction:column;gap:12px">
+<span class="tag tag-accent" style="align-self:flex-start">Protótipo</span>
+<h3 style="margin:0">Rotina</h3>
+<p style="margin:0;font-size:14px;color:var(--color-neutral-800)">Agenda começa vazia. Crie blocos pelo + na Semana, tocando num horário livre, ou pelo chat:</p>
+<ul style="margin:0;padding-left:18px;font-size:14px;color:var(--color-neutral-800);display:flex;flex-direction:column;gap:4px">
+<li>move implementação para 16h</li>
+<li>cria estudo de kafka amanhã às 20h</li>
+<li>cancela a caminhada de hoje</li>
+<li>anota: índice parcial no postgres</li>
+<li>abre o check</li>
+</ul>
+<p style="margin:0;font-size:13px;color:var(--color-neutral-700)">Sem chave, o chat usa regras locais. Com uma chave do Gemini (toque no selo abaixo do título do Chat), a IA real lê a semana e usa as tools da <a href="Arquitetura.dc.html">arquitetura</a>. Use Tweaks para simular outros horários.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;simTime&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;real&quot;,&quot;07:10&quot;,&quot;09:40&quot;,&quot;14:20&quot;,&quot;18:20&quot;,&quot;21:45&quot;],&quot;default&quot;:&quot;real&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Simulação&quot;},&quot;forceMonthSummary&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Simulação&quot;},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;foco&quot;,&quot;semana&quot;,&quot;chat&quot;,&quot;check&quot;],&quot;default&quot;:&quot;foco&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Simulação&quot;}}">
+const CATS = {
+  work: { label: 'Trabalho', base: '#b2622d', bg: '#ffe1d0', ink: '#643312' },
+  academic: { label: 'Acadêmico', base: '#56633f', bg: '#e1eecc', ink: '#3d472b' },
+  health: { label: 'Saúde', base: 'oklch(0.58 0.08 195)', bg: 'oklch(0.93 0.035 195)', ink: 'oklch(0.34 0.06 195)' },
+  agency: { label: 'Agência', base: 'oklch(0.55 0.11 15)', bg: 'oklch(0.92 0.04 15)', ink: 'oklch(0.36 0.09 15)' },
+  logistics: { label: 'Logística', base: '#82796a', bg: '#eee7db', ink: '#474238' },
+  recovery: { label: 'Recuperação', base: 'oklch(0.58 0.07 285)', bg: 'oklch(0.93 0.03 285)', ink: 'oklch(0.36 0.07 285)' },
+};
+const DAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+const DAYS_L = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo'];
+const MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+const STATUS = { planned: 'Planejado', in_progress: 'Em execução', done: 'Concluído', skipped: 'Pulado' };
+const REASONS = ['Energia baixa', 'Imprevisto', 'Procrastinação'];
+const H0 = 0, H1 = 24, DPX = 56, WPX = 26;
+const pad = n => String(n).padStart(2, '0');
+const fmt = m => pad(Math.floor(m / 60) % 24) + ':' + pad(m % 60);
+const toMin = s => { const [h, m] = s.split(':').map(Number); return h * 60 + (m || 0); };
+const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const dur = m => m >= 60 ? Math.floor(m / 60) + 'h' + (m % 60 ? pad(m % 60) : '') : m + ' min';
+const monday = (off = 0) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + off * 7); return d; };
+const dateOf = (i, off = 0) => { const d = monday(off); d.setDate(d.getDate() + i); return d; };
+const wkKey = (off = 0) => { const d = monday(off); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+const bDate = b => { const [y, m, d] = (b.wk || wkKey()).split('-').map(Number); return new Date(y, m - 1, d + b.day); };
+const MONTHS_L = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const endMin = s => { const m = toMin(s); return m === 0 ? 1440 : m; };
+const loadData = () => { try { return JSON.parse(localStorage.getItem('rotina.data') || 'null'); } catch (e) { return null; } };
+
+function getNow(sim) {
+  const d = new Date(); const day = (d.getDay() + 6) % 7;
+  if (sim && sim !== 'real') return { day, min: toMin(sim) };
+  return { day, min: d.getHours() * 60 + d.getMinutes() };
+}
+
+const CAT_KEYS = Object.keys(CATS);
+const TOOLS = [
+  { name: 'create_block', description: 'Cria um bloco de tempo na agenda da semana atual.', parameters: { type: 'OBJECT', properties: {
+    title: { type: 'STRING' }, category: { type: 'STRING', enum: CAT_KEYS }, day_index: { type: 'INTEGER', description: '0=segunda … 6=domingo' },
+    start: { type: 'STRING', description: 'HH:MM 24h' }, end: { type: 'STRING', description: 'HH:MM 24h' } }, required: ['title', 'category', 'day_index', 'start', 'end'] } },
+  { name: 'move_block', description: 'Move um bloco para outro horário e/ou dia. Mantém a duração se end for omitido.', parameters: { type: 'OBJECT', properties: {
+    block_id: { type: 'STRING' }, day_index: { type: 'INTEGER' }, start: { type: 'STRING', description: 'HH:MM' }, end: { type: 'STRING', description: 'HH:MM' } }, required: ['block_id', 'start'] } },
+  { name: 'set_block_status', description: 'Altera o status de um bloco. skip_reason é obrigatório para skipped.', parameters: { type: 'OBJECT', properties: {
+    block_id: { type: 'STRING' }, status: { type: 'STRING', enum: ['planned', 'in_progress', 'done', 'skipped'] }, skip_reason: { type: 'STRING' } }, required: ['block_id', 'status'] } },
+  { name: 'cancel_block', description: 'Propõe cancelar um bloco. O usuário confirma na interface.', parameters: { type: 'OBJECT', properties: {
+    block_id: { type: 'STRING' }, reason: { type: 'STRING' } }, required: ['block_id'] } },
+  { name: 'create_note', description: 'Registra uma anotação de estudo técnico ou reflexão. Vincula ao bloco atual automaticamente.', parameters: { type: 'OBJECT', properties: {
+    text: { type: 'STRING' }, kind: { type: 'STRING', enum: ['Estudo', 'Reflexão'] } }, required: ['text'] } },
+  { name: 'open_weekly_review', description: 'Abre o checklist de planejamento semanal (CHECK de domingo).', parameters: { type: 'OBJECT', properties: {} } },
+];
+const validT = s => typeof s === 'string' && /^\d{1,2}:\d{2}$/.test(s);
+const loadAI = () => { try { return JSON.parse(localStorage.getItem('rotina.gemini') || '{}'); } catch (e) { return {}; } };
+
+function guessCat(t) {
+  if (/treino|academia|corrid|correr|medic|saude|yoga|fisio/.test(t)) return 'health';
+  if (/estud|aula|pos\b|curso|leitura|ler |faculdade|academic/.test(t)) return 'academic';
+  if (/agencia|cliente|call/.test(t)) return 'agency';
+  if (/mercado|banco|casa|desloca|compras|logistic|preparar|documento/.test(t)) return 'logistics';
+  if (/descans|cochilo|livre|lazer|recupera|almoco|jantar|meditar/.test(t)) return 'recovery';
+  return 'work';
+}
+
+class Component extends DCLogic {
+  state = {
+    blocks: (loadData() || {}).blocks || [], rules: (loadData() || {}).rules || [], delAsk: null, tab: this.props.startTab || 'foco', selDay: getNow(this.props.simTime).day, wkOff: 0, edit: null,
+    view: 'day', sheetId: null, sheetReasons: false, focusSkip: false, pastSkip: false, input: '', typing: false,
+    messages: [{ id: 'm0', role: 'ai', text: 'Olá. Estou com a sua semana carregada. Posso criar, mover ou cancelar blocos, registrar anotações de estudo ou abrir o CHECK de domingo.' }],
+    notes: (loadData() || {}).notes || [],
+    checklist: (loadData() || {}).checklist || ['Revisar blocos pulados e motivos', 'Conferir horas por categoria', 'Definir 3 prioridades da semana', 'Ajustar semana-modelo', 'Bloquear deep work antes das reuniões', 'Planejar recuperação'].map(l => ({ l, done: false })),
+    answers: (loadData() || {}).answers || { a: '', b: '', c: '' }, reviewDone: false,
+    name: (() => { try { return localStorage.getItem('rotina.name') || ''; } catch (e) { return ''; } })(),
+    nameDraft: (() => { try { return localStorage.getItem('rotina.name') || ''; } catch (e) { return ''; } })(),
+    editingName: false, monthOpen: false,
+    monthSeen: (() => { try { return localStorage.getItem('rotina.monthSeen') || ''; } catch (e) { return ''; } })(),
+    gKey: loadAI().key || '', gModel: loadAI().model || '', settingsOpen: false, keyDraft: '', modelDraft: '', models: [], settingsMsg: '', testing: false,
+  };
+  async testKey() {
+    const k = this.state.keyDraft.trim(); if (!k) return this.setState({ settingsMsg: 'Cole a chave primeiro.' });
+    this.setState({ testing: true, settingsMsg: '' });
+    try {
+      const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key=' + encodeURIComponent(k));
+      if (!r.ok) throw new Error(r.status === 400 || r.status === 403 ? 'Chave inválida.' : 'Erro ' + r.status);
+      const d = await r.json();
+      const ids = (d.models || []).filter(m => (m.supportedGenerationMethods || []).includes('generateContent') && /gemini/.test(m.name) && /flash/.test(m.name) && !/image|tts|audio|live|embedding/.test(m.name)).map(m => m.name.replace('models/', ''));
+      if (!ids.length) throw new Error('Nenhum modelo Flash disponível para esta chave.');
+      ids.sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
+      const pick = ids.find(i => i === this.state.gModel) || ids.find(i => /flash-lite/.test(i) && !/preview|exp/.test(i)) || ids.find(i => /flash-lite/.test(i)) || ids[0];
+      this.setState({ models: ids.map(id => ({ id })), modelDraft: pick, testing: false, settingsMsg: '' });
+    } catch (e) { this.setState({ testing: false, settingsMsg: e.message }); }
+  }
+  saveAI() {
+    const v = { key: this.state.keyDraft.trim(), model: this.state.modelDraft };
+    try { localStorage.setItem('rotina.gemini', JSON.stringify(v)); } catch (e) {}
+    this.gHist = [];
+    this.setState(s => ({ gKey: v.key, gModel: v.model, settingsOpen: false, messages: [...s.messages, { id: 'm' + this.uid++, role: 'ai', text: 'Gemini conectado (' + v.model + '). Pode falar comigo normalmente.' }] }));
+  }
+  disconnectAI() { try { localStorage.removeItem('rotina.gemini'); } catch (e) {} this.setState({ gKey: '', gModel: '', models: [], keyDraft: '', settingsOpen: false }); }
+
+  setBlocks(fn) { this.live = fn(this.live || this.state.blocks); this.setState({ blocks: this.live }); }
+  sysPrompt() {
+    const n = this.now(); const s = this.state;
+    const list = (this.live || s.blocks).filter(b => b.wk === wkKey()).sort((a, b) => a.day * 1440 + a.start - (b.day * 1440 + b.start))
+      .map(b => b.id + ' | ' + DAYS[b.day] + ' | ' + fmt(b.start) + '–' + fmt(b.end) + ' | ' + b.cat + ' | ' + b.status + ' | ' + b.title).join('\n');
+    const dates = DAYS.map((d, i) => i + '=' + d + ' ' + dateOf(i).getDate() + '/' + (dateOf(i).getMonth() + 1)).join(', ');
+    return 'Você é o assistente de rotina de ' + (s.name || 'o usuário') + ', que segue Kaizen/PDCA e quer reduzir fadiga de decisão. Responda em português, curto e direto.\n' +
+      'Agora: ' + DAYS_L[n.day] + ' ' + dateOf(n.day).getDate() + '/' + (dateOf(n.day).getMonth() + 1) + ' ' + fmt(n.min) + '. Hoje é day_index ' + n.day + '.\n' +
+      'Dias da semana atual (day_index): ' + dates + '.\nCategorias: work=Trabalho, academic=Acadêmico, health=Saúde, agency=Agência, logistics=Logística, recovery=Recuperação.\n' +
+      'Blocos (id | dia | horário | categoria | status | título):\n' + (list || '(nenhum)') + '\n' +
+      'Notas recentes: ' + s.notes.slice(0, 5).map(x => x.text).join(' / ') + '\n' +
+      'Regras: use as funções para qualquer alteração na agenda; use apenas IDs da lista; horários em HH:MM 24h; se uma função retornar conflito, explique e sugira alternativa; para cancelar use cancel_block (o usuário confirma na tela). Não repita a lista inteira nas respostas.';
+  }
+  execTool(name, a) {
+    const n = this.now(); const blocks = this.live || this.state.blocks; const aid = 'a' + this.uid++;
+    const find = id => blocks.find(b => b.id === id);
+    const cfTxt = cf => ({ error: 'conflito', conflitos: cf.map(c => ({ id: c.id, title: c.title, horario: fmt(c.start) + '–' + fmt(c.end) })) });
+    if (name === 'create_block') {
+      if (!validT(a.start) || !validT(a.end)) return { result: { error: 'horário inválido' } };
+      const d = Math.max(0, Math.min(6, a.day_index ?? n.day)); const start = toMin(a.start), end = endMin(a.end);
+      if (end <= start) return { result: { error: 'end deve ser depois de start' } };
+      const cf = this.conflicts(blocks, d, start, end); if (cf.length) return { result: cfTxt(cf) };
+      const cat = CATS[a.category] ? a.category : guessCat(norm(a.title || ''));
+      const b = { id: 'b' + this.uid++, wk: wkKey(), day: d, start, end, cat, title: a.title || 'Novo bloco', status: 'planned', reason: '', src: 'ai' };
+      this.actions[aid] = { type: 'create', id: b.id }; this.setBlocks(L => [...L, b]);
+      return { result: { ok: true, id: b.id }, card: { kind: 'applied', kicker: 'create_block', title: b.title, sub: DAYS[d] + ' ' + fmt(start) + '–' + fmt(end) + ' · ' + CATS[cat].label, dot: CATS[cat].base, actionId: aid, canUndo: true } };
+    }
+    if (name === 'move_block') {
+      const b = find(a.block_id); if (!b) return { result: { error: 'bloco não encontrado' } };
+      if (!validT(a.start)) return { result: { error: 'horário inválido' } };
+      const d = a.day_index != null ? Math.max(0, Math.min(6, a.day_index)) : b.day; const start = toMin(a.start);
+      const end = validT(a.end) ? endMin(a.end) : start + (b.end - b.start);
+      const cf = this.conflicts(blocks, d, start, end, b.id, b.wk); if (cf.length) return { result: cfTxt(cf) };
+      this.actions[aid] = { type: 'move', id: b.id, from: { day: b.day, start: b.start, end: b.end } };
+      this.setBlocks(L => L.map(x => x.id === b.id ? { ...x, day: d, start, end } : x));
+      return { result: { ok: true }, card: { kind: 'applied', kicker: 'move_block', title: b.title, sub: DAYS[b.day] + ' ' + fmt(b.start) + ' → ' + DAYS[d] + ' ' + fmt(start) + '–' + fmt(end), dot: CATS[b.cat].base, actionId: aid, canUndo: true } };
+    }
+    if (name === 'set_block_status') {
+      const b = find(a.block_id); if (!b || !STATUS[a.status]) return { result: { error: 'bloco ou status inválido' } };
+      if (a.status === 'skipped' && !a.skip_reason) return { result: { error: 'skip_reason é obrigatório; pergunte o motivo ao usuário' } };
+      this.actions[aid] = { type: 'move', id: b.id, from: { status: b.status, reason: b.reason } };
+      this.setBlocks(L => L.map(x => x.id === b.id ? { ...x, status: a.status, reason: a.skip_reason || '' } : (a.status === 'in_progress' && x.status === 'in_progress' ? { ...x, status: 'done' } : x)));
+      return { result: { ok: true }, card: { kind: 'applied', kicker: 'set_block_status', title: b.title, sub: STATUS[b.status] + ' → ' + STATUS[a.status] + (a.skip_reason ? ' · ' + a.skip_reason : ''), dot: CATS[b.cat].base, actionId: aid, canUndo: true } };
+    }
+    if (name === 'cancel_block') {
+      const b = find(a.block_id); if (!b) return { result: { error: 'bloco não encontrado' } };
+      this.actions[aid] = { type: 'cancel', block: b };
+      return { result: { status: 'aguardando confirmação do usuário na tela' }, card: { kind: 'proposed', kicker: 'cancel_block', title: b.title, sub: DAYS[b.day] + ' ' + fmt(b.start) + '–' + fmt(b.end) + (a.reason ? ' · ' + a.reason : ''), dot: CATS[b.cat].base, actionId: aid, isProposed: true } };
+    }
+    if (name === 'create_note') {
+      const { cur } = this.focus();
+      const note = { ts: Date.now(), id: 'n' + this.uid++, kind: a.kind || 'Estudo', text: a.text || '', day: n.day, link: cur ? cur.title : '' };
+      this.actions[aid] = { type: 'note', id: note.id }; this.setState(s => ({ notes: [note, ...s.notes] }));
+      return { result: { ok: true }, card: { kind: 'applied', kicker: 'create_note', title: note.text, sub: cur ? 'Vinculada a: ' + cur.title : 'Nota avulsa', dot: CATS.academic.base, actionId: aid, canUndo: true } };
+    }
+    if (name === 'open_weekly_review') return { result: { ok: true }, card: { kind: 'nav', kicker: 'open_weekly_review', title: 'CHECK de domingo', sub: 'Métricas da semana calculadas', dot: CATS.academic.base, actionId: aid } };
+    return { result: { error: 'função desconhecida' } };
+  }
+  async askGemini(text) {
+    this.live = this.state.blocks;
+    const h = this.gHist || [];
+    if (h.length > 24) { let i = h.length - 20; while (i < h.length && !(h[i].role === 'user' && h[i].parts[0] && h[i].parts[0].text)) i++; this.gHist = h.slice(i); } else this.gHist = h;
+    this.gHist.push({ role: 'user', parts: [{ text }] });
+    try {
+      for (let round = 0; round < 5; round++) {
+        const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + this.state.gModel + ':generateContent?key=' + encodeURIComponent(this.state.gKey), {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ systemInstruction: { parts: [{ text: this.sysPrompt() }] }, contents: this.gHist, tools: [{ functionDeclarations: TOOLS }] }),
+        });
+        if (res.status === 429) { this.gHist = []; this.reply('Limite gratuito do Gemini atingido por agora. Respondendo no modo local.', undefined, true); this.live = null; return this.handle(text); }
+        if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error((e.error && e.error.message) || 'HTTP ' + res.status); }
+        const data = await res.json(); const content = data.candidates && data.candidates[0] && data.candidates[0].content;
+        if (!content || !content.parts) { this.gHist.pop(); return this.reply('Não recebi resposta. Tente de novo.'); }
+        this.gHist.push(content);
+        const calls = content.parts.filter(p => p.functionCall);
+        const txt = content.parts.filter(p => p.text && !p.thought).map(p => p.text).join('').trim();
+        if (!calls.length) return this.reply(txt || 'Ok.');
+        if (txt) this.reply(txt, undefined, true);
+        const responses = calls.map(p => {
+          const r = this.execTool(p.functionCall.name, p.functionCall.args || {});
+          if (r.card) this.reply('', r.card, true);
+          return { functionResponse: { name: p.functionCall.name, response: r.result } };
+        });
+        this.gHist.push({ role: 'user', parts: responses });
+      }
+      this.reply('Fiz várias ações seguidas e parei aqui. Confira a agenda.');
+    } catch (e) { this.gHist = []; this.reply('Erro ao falar com o Gemini: ' + e.message); }
+    finally { this.live = null; }
+  }
+  saveName() { const v = this.state.nameDraft.trim(); if (!v) return; try { localStorage.setItem('rotina.name', v); } catch (e) {} this.setState({ name: v, editingName: false }); }
+  dayRef = React.createRef();
+  chatRef = React.createRef();
+  actions = {};
+  uid = Date.now();
+
+  componentDidMount() { this.timer = setInterval(() => { this.forceUpdate(); this.ensureWeeks(); }, 30000); this.scrollDay(); this.ensureWeeks(); }
+  ensureWeeks() {
+    const s = this.state; const b = this.gen(s.blocks, s.rules, [wkKey(), wkKey(s.wkOff)]);
+    if (b !== s.blocks) this.setState({ blocks: b });
+  }
+  gen(blocks, rules, wks) {
+    let out = blocks;
+    for (const wk of [...new Set(wks)]) for (const r of rules) for (const d of r.days) {
+      const key = wk + '#' + d;
+      if (key < r.from || (r.until && key >= r.until) || r.skip.includes(key)) continue;
+      if (out.some(b => b.rid === r.id && b.wk === wk && b.day === d)) continue;
+      if (this.conflicts(out, d, r.start, r.end, null, wk).length) continue;
+      if (out === blocks) out = [...blocks];
+      out.push({ id: 'b' + this.uid++, rid: r.id, wk, day: d, start: r.start, end: r.end, cat: r.cat, title: r.title, status: 'planned', reason: '', src: 'manual' });
+    }
+    return out;
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.tt); }
+  componentDidUpdate(pp, ps) {
+    if (ps.wkOff !== this.state.wkOff || ps.rules !== this.state.rules) this.ensureWeeks();
+    if (pp.simTime !== this.props.simTime) this.setState({ selDay: getNow(this.props.simTime).day });
+
+    if (ps.tab !== this.state.tab || ps.view !== this.state.view || ps.wkOff !== this.state.wkOff) this.scrollDay();
+    if ((ps.messages.length !== this.state.messages.length || ps.typing !== this.state.typing) && this.chatRef.current) this.chatRef.current.scrollTop = 1e6;
+    if (ps.tab !== this.state.tab && this.state.tab === 'chat') setTimeout(() => this.chatRef.current && (this.chatRef.current.scrollTop = 1e6), 30);
+  }
+  scrollDay() { setTimeout(() => { const el = this.dayRef.current; if (el) el.scrollTop = Math.max(0, (this.state.wkOff === 0 && this.state.selDay === getNow(this.props.simTime).day ? getNow(this.props.simTime).min / 60 - H0 : 8) * DPX - 140); }, 30); }
+
+  now() { return getNow(this.props.simTime); }
+  patch(id, p) { this.setState(s => ({ blocks: s.blocks.map(b => b.id === id ? { ...b, ...p } : b) })); }
+  setStatus(id, status, reason) {
+    this.setState(s => ({
+      blocks: s.blocks.map(b => {
+        if (b.id === id) return { ...b, status, reason: status === 'skipped' ? (reason || '') : '' };
+        if (status === 'in_progress' && b.status === 'in_progress') return { ...b, status: 'done' };
+        return b;
+      }), sheetReasons: false, focusSkip: false, pastSkip: false,
+    }));
+  }
+  conflicts(blocks, day, start, end, except, wk) { const w = wk || wkKey(); return blocks.filter(b => b.id !== except && (b.wk || wkKey()) === w && b.day === day && b.start < end && start < b.end); }
+  openEditor(b, day, hour) {
+    const d = b ? b.day : (day ?? (this.state.wkOff === 0 ? this.now().day : this.state.selDay));
+    const st = b ? b.start : (hour ?? 9) * 60;
+    const rule = b && b.rid && this.state.rules.find(r => r.id === b.rid);
+    this.setState({ sheetId: null, delAsk: null, edit: { id: b ? b.id : null, rid: rule ? rule.id : null, scope: 'future', rep: rule ? 'weekly' : 'none', days: rule ? [...rule.days] : [d],
+      wk: b ? b.wk : wkKey(this.state.wkOff), title: b ? b.title : '', cat: b ? b.cat : 'work', day: d, start: fmt(st), end: fmt(b ? b.end : Math.min(1440, st + 60)), err: '' } });
+  }
+  saveEditor() {
+    const e = this.state.edit; const set = p => this.setState({ edit: { ...e, ...p } });
+    if (!validT(e.start) || !validT(e.end)) return set({ err: 'Horário inválido.' });
+    const start = toMin(e.start), end = endMin(e.end);
+    if (end <= start) return set({ err: 'O fim precisa ser depois do início.' });
+    const title = e.title.trim() || 'Novo bloco';
+    const single = !e.rid || e.scope === 'one' ? e.rep === 'none' || (e.rid && e.scope === 'one') : e.rep === 'none';
+    const cfMsg = (d, c) => set({ err: DAYS[d] + ': conflito com "' + c.title + '" (' + fmt(c.start) + '–' + fmt(c.end) + ').' });
+    if (single) {
+      const cf = this.conflicts(this.state.blocks, e.day, start, end, e.id, e.wk);
+      if (cf.length) return cfMsg(e.day, cf[0]);
+      const cutKey = e.wk + '#' + e.day; const endRule = e.rid && e.scope === 'future';
+      return this.setState(s => ({
+        edit: null, selDay: e.day,
+        rules: endRule ? s.rules.map(r => r.id === e.rid ? { ...r, until: cutKey } : r) : s.rules,
+        blocks: e.id ? s.blocks.filter(b => !(endRule && b.rid === e.rid && b.id !== e.id && b.status === 'planned' && b.wk + '#' + b.day > cutKey))
+            .map(b => b.id === e.id ? { ...b, title, cat: e.cat, day: e.day, start, end, rid: endRule ? null : b.rid } : b)
+          : [...s.blocks, { id: 'b' + this.uid++, wk: e.wk, day: e.day, start, end, cat: e.cat, title, status: 'planned', reason: '', src: 'manual' }],
+      }));
+    }
+    if (!e.days.length) return set({ err: 'Selecione ao menos um dia.' });
+    const isCur = e.wk === wkKey(); const fromDay = e.id ? e.day : (isCur ? this.now().day : 0);
+    const fromKey = e.wk + '#' + fromDay;
+    const ignore = b => (e.rid && b.rid === e.rid && b.status === 'planned') || b.id === e.id;
+    for (const d of [...e.days].sort()) {
+      if (d < fromDay) continue;
+      const cf = this.conflicts(this.state.blocks.filter(b => !ignore(b)), d, start, end, null, e.wk);
+      if (cf.length) return cfMsg(d, cf[0]);
+    }
+    const nr = { id: 'r' + this.uid++, title, cat: e.cat, start, end, days: [...e.days].sort(), from: fromKey, until: null, skip: [] };
+    this.setState(s => {
+      const rules = [...s.rules.map(r => r.id === e.rid ? { ...r, until: fromKey } : r), nr];
+      const kept = s.blocks.filter(b => !(b.id === e.id && (!e.rid || b.status === 'planned')) && !(e.rid && b.rid === e.rid && b.status === 'planned' && b.wk + '#' + b.day >= fromKey));
+      return { edit: null, rules, blocks: this.gen(kept, rules, [wkKey(), wkKey(s.wkOff), e.wk]) };
+    });
+  }
+  askDel(id) { const b = this.state.blocks.find(x => x.id === id); if (b && b.rid) this.setState({ delAsk: id }); else this.delBlock(id); }
+  delRec(id, future) {
+    this.setState(s => {
+      const b = s.blocks.find(x => x.id === id); if (!b) return { delAsk: null };
+      const key = b.wk + '#' + b.day;
+      return {
+        delAsk: null, sheetId: null, edit: null,
+        rules: s.rules.map(r => r.id !== b.rid ? r : future ? { ...r, until: key } : { ...r, skip: [...r.skip, key] }),
+        blocks: s.blocks.filter(x => x.id !== id && !(future && x.rid === b.rid && x.status === 'planned' && x.wk + '#' + x.day > key)),
+      };
+    });
+  }
+  delBlock(id) { this.setState(s => ({ blocks: s.blocks.filter(b => b.id !== id), sheetId: null, edit: null })); }
+
+  focus() {
+    const n = this.now();
+    const today = this.state.blocks.filter(b => b.wk === wkKey() && b.day === n.day).sort((a, b) => a.start - b.start);
+    const cur = today.find(b => b.start <= n.min && n.min < b.end && (b.status === 'planned' || b.status === 'in_progress'));
+    const next = today.find(b => b.start > n.min && b.status === 'planned' && (!cur || b.id !== cur.id));
+    const past = [...today].reverse().find(b => b.end <= n.min && (!cur || b.id !== cur.id));
+    return { today, cur, next, past, n };
+  }
+
+  findBlock(t, day) {
+    const n = this.now();
+    const stop = new Set(['move', 'mova', 'muda', 'mude', 'passa', 'passe', 'para', 'amanha', 'hoje', 'bloco', 'cancela', 'cancelar', 'cancele', 'remove', 'desmarca', 'adia', 'adie', 'empurra', 'minutos', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo', 'depois', 'tira']);
+    const words = t.split(/[^a-z0-9]+/).filter(w => w.length >= 4 && !stop.has(w) && !/^\d/.test(w));
+    if (!words.length) return null;
+    let pool = this.state.blocks.filter(b => b.wk === wkKey()).filter(b => day != null ? b.day === day : (b.day > n.day || (b.day === n.day && b.end > n.min)));
+    const scored = pool.map(b => ({ b, s: words.filter(w => norm(b.title).includes(w)).length })).filter(x => x.s > 0);
+    if (!scored.length) return null;
+    scored.sort((a, b) => b.s - a.s || (a.b.day * 1440 + a.b.start) - (b.b.day * 1440 + b.b.start));
+    return scored[0].b;
+  }
+
+  reply(text, card, keep) {
+    const id = 'm' + this.uid++;
+    this.setState(s => ({ typing: !!keep, messages: [...s.messages, { id, role: 'ai', text, card }] }));
+  }
+  setCard(actionId, p) { this.setState(s => ({ messages: s.messages.map(m => m.card && m.card.actionId === actionId ? { ...m, card: { ...m.card, ...p } } : m) })); }
+
+  handle(raw) {
+    const t = norm(raw); const n = this.now(); const blocks = this.state.blocks;
+    const names = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'];
+    let day = null;
+    if (/amanha/.test(t)) day = Math.min(6, n.day + 1); else if (/\bhoje\b/.test(t)) day = n.day;
+    else names.forEach((w, i) => { if (day == null && t.includes(w)) day = i; });
+    const times = [...t.matchAll(/\b(\d{1,2})(?::(\d{2})|h(\d{2})?)/g)].map(m => +m[1] * 60 + +(m[2] || m[3] || 0));
+    if (!times.length) { const m = t.match(/\b(?:as|para|pra|das)\s+(\d{1,2})\b/); if (m) times.push(+m[1] * 60); }
+    const aid = 'a' + this.uid++;
+
+    if (/check|revis|planejamento semanal/.test(t) && !/^(cria|agenda|marca)/.test(t)) {
+      return this.reply('Abrindo o checklist de planejamento semanal. Já calculei suas métricas da semana.', { kind: 'nav', kicker: 'open_weekly_review', title: 'CHECK de domingo', sub: DAYS[0] + ' ' + dateOf(0).getDate() + ' — ' + DAYS[6] + ' ' + dateOf(6).getDate(), dot: CATS.academic.base, actionId: aid });
+    }
+    if (/^(anota|anote|nota|registra|registre|anotacao)/.test(t)) {
+      const body = raw.includes(':') ? raw.slice(raw.indexOf(':') + 1).trim() : raw.replace(/^\S+\s*/, '');
+      const { cur } = this.focus();
+      const note = { ts: Date.now(), id: 'n' + this.uid++, kind: 'Estudo', text: body, day: n.day, link: cur ? cur.title : '' };
+      this.actions[aid] = { type: 'note', id: note.id };
+      this.setState(s => ({ notes: [note, ...s.notes] }));
+      return this.reply('Anotado.', { kind: 'applied', kicker: 'create_note', title: body, sub: cur ? 'Vinculada a: ' + cur.title : 'Nota de estudo avulsa', dot: CATS.academic.base, actionId: aid, canUndo: true });
+    }
+    if (/^(cancela|cancele|cancelar|desmarca|remove|tira)/.test(t)) {
+      const b = this.findBlock(t, day);
+      if (!b) return this.reply('Não encontrei esse bloco. Pode dizer o nome como aparece na agenda?');
+      this.actions[aid] = { type: 'cancel', block: b };
+      return this.reply('Cancelamentos pedem confirmação. Confirma?', { kind: 'proposed', kicker: 'cancel_block', title: b.title, sub: DAYS[b.day] + ' ' + fmt(b.start) + '–' + fmt(b.end), dot: CATS[b.cat].base, actionId: aid, isProposed: true });
+    }
+    if (/^(move|mova|muda|mude|passa|passe|adia|adie|empurra|joga)/.test(t)) {
+      const b = this.findBlock(t.replace(/\b(amanha|hoje)\b/g, ''), /amanha/.test(t) ? Math.min(6, n.day + 1) : (/\bhoje\b/.test(t) ? n.day : null));
+      if (!b) return this.reply('Não encontrei esse bloco. Pode dizer o nome como aparece na agenda?');
+      const len = b.end - b.start; let start;
+      const shift = t.match(/(\d+)\s*(min|h)\b/);
+      if (/^(adia|adie|empurra)/.test(t) && shift && !times.length) start = b.start + (+shift[1]) * (shift[2] === 'h' ? 60 : 1);
+      else if (/^(adia|adie|empurra)/.test(t) && !times.length) start = b.start + 30;
+      else if (times.length) start = times[times.length - 1];
+      else return this.reply('Para que horário?');
+      const tDay = (day != null && !/amanha|hoje/.test(t)) ? day : b.day;
+      const cf = this.conflicts(blocks, tDay, start, start + len, b.id);
+      if (cf.length) return this.reply('Isso sobrepõe ' + cf.map(c => '"' + c.title + '" (' + fmt(c.start) + '–' + fmt(c.end) + ')').join(' e ') + '. Quer que eu mova para outro horário ou encurte o bloco?');
+      this.actions[aid] = { type: 'move', id: b.id, from: { day: b.day, start: b.start, end: b.end } };
+      this.patch(b.id, { day: tDay, start, end: start + len });
+      return this.reply('Feito.', { kind: 'applied', kicker: 'move_block', title: b.title, sub: DAYS[b.day] + ' ' + fmt(b.start) + ' → ' + DAYS[tDay] + ' ' + fmt(start) + '–' + fmt(start + len), dot: CATS[b.cat].base, actionId: aid, canUndo: true });
+    }
+    if (/^(cria|criar|crie|adiciona|adicione|agenda|agende|marca|marque|bloqueia|bloqueie)/.test(t)) {
+      if (!times.length) return this.reply('Em qual horário? Ex.: "cria estudo de kafka amanhã às 20h".');
+      const d = day != null ? day : n.day; const start = times[0];
+      const dm = t.match(/por\s+(\d+)\s*(h|min)(\d{2})?/);
+      const end = times[1] > start ? times[1] : start + (dm ? (dm[2] === 'h' ? +dm[1] * 60 + +(dm[3] || 0) : +dm[1]) : 60);
+      let title = raw.replace(/^\s*\S+\s+(um\s+)?(bloco\s+)?(de\s+)?/i, '')
+        .replace(/\b(amanhã|amanha|hoje|na |no |segunda|terça|terca|quarta|quinta|sexta|sábado|sabado|domingo)(-feira)?\b/gi, '')
+        .replace(/por\s+\d+\s*(h|min)\S*/gi, '')
+        .replace(/\b(às|as|das|de|para|pra|até|ate|a)?\s*\d{1,2}(:\d{2}|h\d{0,2})?\b/gi, '')
+        .replace(/\s+/g, ' ').trim();
+      title = title ? title[0].toUpperCase() + title.slice(1) : 'Novo bloco';
+      const cf = this.conflicts(blocks, d, start, end);
+      if (cf.length) return this.reply('Esse horário já tem ' + cf.map(c => '"' + c.title + '" (' + fmt(c.start) + '–' + fmt(c.end) + ')').join(' e ') + '. Quer outro horário?');
+      const b = { id: 'b' + this.uid++, wk: wkKey(), day: d, start, end, cat: guessCat(norm(title)), title, status: 'planned', reason: '', src: 'ai' };
+      this.actions[aid] = { type: 'create', id: b.id };
+      this.setState(s => ({ blocks: [...s.blocks, b] }));
+      return this.reply('Criado.', { kind: 'applied', kicker: 'create_block', title, sub: DAYS[d] + ' ' + fmt(start) + '–' + fmt(end) + ' · ' + CATS[b.cat].label, dot: CATS[b.cat].base, actionId: aid, canUndo: true });
+    }
+    if (/agora|proximo|o que tenho|hoje|resumo/.test(t)) {
+      const { cur, next, today } = this.focus();
+      const left = today.filter(b => b.status === 'planned' && b.start >= n.min).length;
+      return this.reply((cur ? 'Agora: ' + cur.title + ' (' + fmt(cur.start) + '–' + fmt(cur.end) + ').' : 'Você está sem bloco agora.') + (next ? '\nPróximo: ' + next.title + ' às ' + fmt(next.start) + '.' : '\nNada mais planejado hoje.') + '\nRestam ' + left + ' blocos planejados hoje.');
+    }
+    this.reply('Posso criar, mover ou cancelar blocos, registrar anotações de estudo ou abrir o CHECK. Ex.: "move implementação para 16h".');
+  }
+
+  send(text) {
+    const v = (text ?? this.state.input).trim(); if (!v || this.state.typing) return;
+    this.setState(s => ({ input: '', typing: true, messages: [...s.messages, { id: 'm' + this.uid++, role: 'user', text: v }] }));
+    if (this.state.gKey && this.state.gModel) this.askGemini(v);
+    else this.tt = setTimeout(() => this.handle(v), 650);
+  }
+  undo(aid) {
+    const a = this.actions[aid]; if (!a) return;
+    if (a.type === 'move') this.patch(a.id, a.from.status ? a.from : a.from);
+    if (a.type === 'create') this.setState(s => ({ blocks: s.blocks.filter(b => b.id !== a.id) }));
+    if (a.type === 'note') this.setState(s => ({ notes: s.notes.filter(x => x.id !== a.id) }));
+    if (a.type === 'cancel') this.setState(s => ({ blocks: [...s.blocks, a.block] }));
+    this.setCard(aid, { canUndo: false, kicker: 'desfeito', op: 0.55 });
+  }
+  confirm(aid) { const a = this.actions[aid]; this.setState(s => ({ blocks: s.blocks.filter(b => b.id !== a.block.id) })); this.setCard(aid, { isProposed: false, canUndo: true, kicker: 'cancel_block · aplicado' }); }
+  discard(aid) { this.setCard(aid, { isProposed: false, kicker: 'descartado', op: 0.55 }); }
+
+  monthSummary() {
+    const t = new Date(); const pm = new Date(t.getFullYear(), t.getMonth() - 1, 1);
+    const key = pm.getFullYear() + '-' + pad(pm.getMonth() + 1);
+    const L = this.state.blocks.filter(b => { const d = bDate(b); return d.getFullYear() === pm.getFullYear() && d.getMonth() === pm.getMonth(); });
+    const days = new Date(t.getFullYear(), t.getMonth(), 0).getDate();
+    const sum = arr => arr.reduce((a, b) => a + b.end - b.start, 0);
+    const done = L.filter(b => b.status === 'done'); const skipped = L.filter(b => b.status === 'skipped');
+    const closed = done.length + skipped.length;
+    const free = Math.max(0, days * (1440 - 480) - sum(L)); const lowE = sum(skipped.filter(b => b.reason === 'Energia baixa'));
+    const cats = Object.entries(CATS).map(([k, c]) => {
+      let p = sum(L.filter(b => b.cat === k)), d = sum(done.filter(b => b.cat === k));
+      if (k === 'recovery') { p += free + lowE; d += free + lowE; }
+      return { ...c, plan: p ? dur(p) : '0h', done: d ? dur(d) : '0h', pct: (p ? Math.round(d / p * 100) : 0) + '%' };
+    });
+    const reasons = REASONS.map(r => ({ label: r, n: skipped.filter(b => b.reason === r).length })).filter(r => r.n);
+    const notes = this.state.notes.filter(x => x.ts && new Date(x.ts).getMonth() === pm.getMonth() && new Date(x.ts).getFullYear() === pm.getFullYear()).length;
+    return { key, name: MONTHS_L[pm.getMonth()], total: L.length, rate: (closed ? Math.round(done.length / closed * 100) : 0) + '%', doneH: dur(sum(done)) , skipped: skipped.length, cats, reasons, hasReasons: reasons.length > 0, notes, show: this.state.monthSeen !== key && (t.getDate() === 1 || L.length > 0 || this.props.forceMonthSummary) };
+  }
+  markMonthSeen(key) { try { localStorage.setItem('rotina.monthSeen', key); } catch (e) {} this.setState({ monthSeen: key, monthOpen: false }); }
+  persist() {
+    const { blocks, rules, notes, answers, checklist } = this.state;
+    const j = JSON.stringify({ blocks, rules, notes, answers, checklist });
+    if (j === this.savedJ) return; this.savedJ = j;
+    try { localStorage.setItem('rotina.data', j); } catch (e) {}
+  }
+  renderVals() {
+    this.persist();
+    const s = this.state; const ms = this.monthSummary(); const { cur, next, past, today, n } = this.focus();
+    const tabDefs = [
+      ['foco', 'Foco', 'M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20M12 6a6 6 0 1 0 0 12a6 6 0 1 0 0-12M12 10a2 2 0 1 0 0 4a2 2 0 1 0 0-4'],
+      ['semana', 'Semana', 'M8 2v4M16 2v4M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM3 10h18'],
+      ['chat', 'Chat', 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z'],
+      ['check', 'CHECK', 'M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 14l2 2 4-4'],
+    ];
+    const go = tab => this.setState({ tab, sheetId: null });
+    const td = dateOf(n.day);
+    const curC = cur && CATS[cur.cat];
+    const sheetB = s.blocks.find(b => b.id === s.sheetId);
+    const blockVis = (b, px) => ({
+      top: ((b.start / 60 - H0) * px) + 'px', h: Math.max(px === DPX ? 26 : 4, (b.end - b.start) / 60 * px - 3) + 'px',
+      op: b.status === 'done' ? 0.6 : b.status === 'skipped' ? 0.45 : 1,
+    });
+    const week = s.blocks.filter(b => b.wk === wkKey());
+    const vis = s.blocks.filter(b => b.wk === wkKey(s.wkOff)); const isCurWk = s.wkOff === 0;
+    let freeAll = 0, freeEl = 0;
+    for (let d = 0; d < 7; d++) {
+      const lim = d < n.day ? 1440 : d === n.day ? n.min : 0; const db = week.filter(b => b.day === d);
+      freeAll += Math.max(0, 1440 - 480 - db.reduce((a, b) => a + b.end - b.start, 0));
+      freeEl += Math.max(0, lim - Math.min(lim, 480) - db.reduce((a, b) => a + Math.max(0, Math.min(b.end, lim) - b.start), 0));
+    }
+    const lowE = week.filter(b => b.status === 'skipped' && b.reason === 'Energia baixa').reduce((a, b) => a + b.end - b.start, 0);
+    const planned = week.filter(b => b.day <= n.day);
+    const doneN = planned.filter(b => b.status === 'done').length;
+    const closed = planned.filter(b => b.status === 'done' || b.status === 'skipped').length;
+    const skips = week.filter(b => b.status === 'skipped');
+
+    return {
+      clock: fmt(n.min),
+      isLogin: !s.name || s.editingName, loginIsEmail: true,
+      nameDraft: s.nameDraft, onName: e => this.setState({ nameDraft: e.target.value }),
+      onNameKey: e => { if (e.key === 'Enter') this.saveName(); }, saveName: () => this.saveName(),
+      editName: () => this.setState({ editingName: true, nameDraft: s.name, sheetId: null }),
+      initial: (s.name || '?')[0].toUpperCase(), firstName: (s.name || '').split(' ')[0],
+      isFoco: s.tab === 'foco', isSemana: s.tab === 'semana', isChat: s.tab === 'chat', isCheck: s.tab === 'check',
+      tabs: tabDefs.map(([k, label, d]) => ({ label, d, color: s.tab === k ? 'var(--color-accent-700)' : 'var(--color-neutral-600)', bg: s.tab === k ? 'var(--color-accent-200)' : 'transparent', onClick: () => go(k) })),
+      goChat: () => go('chat'), goCheck: () => go('check'),
+      todayLabel: DAYS_L[n.day][0].toUpperCase() + DAYS_L[n.day].slice(1) + ', ' + td.getDate() + ' ' + MONTHS[td.getMonth()],
+      hasCurrent: !!cur, noCurrent: !cur,
+      cur: cur ? {
+        ...curC, catLabel: curC.label, title: cur.title, time: fmt(cur.start) + '–' + fmt(cur.end),
+        pct: Math.round((n.min - cur.start) / (cur.end - cur.start) * 100) + '%', left: dur(cur.end - n.min),
+        statusLabel: STATUS[cur.status], primaryLabel: cur.status === 'in_progress' ? 'Concluir' : 'Iniciar bloco',
+        onPrimary: () => this.setStatus(cur.id, cur.status === 'in_progress' ? 'done' : 'in_progress'),
+      } : {},
+      freeTitle: next ? 'Livre até ' + fmt(next.start) : 'Dia encerrado',
+      focusSkip: s.focusSkip, noFocusSkip: !s.focusSkip, onFocusSkip: () => this.setState({ focusSkip: true }),
+      focusReasons: REASONS.map(label => ({ label, onClick: () => this.setStatus(cur.id, 'skipped', label) })),
+      hasPast: !!past,
+      pst: past ? (() => { const open = past.status === 'planned' || past.status === 'in_progress'; return {
+        ...CATS[past.cat], catLabel: CATS[past.cat].label, title: past.title, time: fmt(past.start) + '–' + fmt(past.end),
+        label: open ? 'Anterior · sem registro' : 'Anterior · ' + (past.status === 'skipped' ? 'Pulado' + (past.reason ? ' (' + past.reason + ')' : '') : STATUS[past.status]),
+        open, showActs: open && !s.pastSkip, showReasons: open && s.pastSkip,
+        onDone: () => this.setStatus(past.id, 'done'), onSkip: () => this.setState({ pastSkip: true }), onBack: () => this.setState({ pastSkip: false }),
+        reasons: REASONS.map(label => ({ label, onClick: () => this.setStatus(past.id, 'skipped', label) })),
+      }; })() : {},
+      hasNext: !!next,
+      nxt: next ? { ...CATS[next.cat], catLabel: CATS[next.cat].label, title: next.title, time: fmt(next.start) + '–' + fmt(next.end), inLabel: 'em ' + dur(next.start - n.min) } : {},
+      dayDone: today.filter(b => b.status === 'done').length + ' de ' + today.length + ' concluídos',
+      dayDots: today.map(b => ({ bg: b.status === 'skipped' ? 'var(--color-neutral-400)' : CATS[b.cat].base, op: b.status === 'done' ? 1 : b.status === 'skipped' ? 0.5 : (b.status === 'in_progress' ? 0.8 : 0.28) })),
+
+      viewOpts: [['day', 'Dia'], ['week', 'Semana']].map(([k, label]) => ({ label, bg: s.view === k ? 'var(--color-neutral-100)' : 'transparent', color: s.view === k ? 'var(--color-text)' : 'var(--color-neutral-700)', onClick: () => this.setState({ view: k }) })),
+      wkLabel: (isCurWk ? 'Esta semana · ' : '') + dateOf(0, s.wkOff).getDate() + ' ' + MONTHS[dateOf(0, s.wkOff).getMonth()] + ' — ' + dateOf(6, s.wkOff).getDate() + ' ' + MONTHS[dateOf(6, s.wkOff).getMonth()],
+      prevWk: () => this.setState(st => ({ wkOff: st.wkOff - 1 })), nextWk: () => this.setState(st => ({ wkOff: st.wkOff + 1 })),
+      notCurWk: !isCurWk, goToday: () => this.setState({ wkOff: 0, selDay: n.day }),
+      newBlock: () => this.openEditor(null, s.view === 'day' ? s.selDay : null),
+      dayChips: DAYS.map((label, i) => ({
+        label, num: dateOf(i, s.wkOff).getDate(),
+        bg: i === s.selDay ? 'var(--color-accent-500)' : 'transparent', color: i === s.selDay ? '#fff' : 'var(--color-text)',
+        dot: isCurWk && i === n.day ? (i === s.selDay ? '#fff' : 'var(--color-accent-600)') : 'transparent',
+        onClick: () => this.setState({ selDay: i, view: 'day' }),
+      })),
+      isDayView: s.view === 'day', isWeekView: s.view === 'week', dayRef: this.dayRef,
+      dayHeight: ((H1 - H0) * DPX + 8) + 'px',
+      hours: Array.from({ length: H1 - H0 + 1 }, (_, i) => ({ label: pad((H0 + i) % 24) + ':00', top: (i * DPX - 7) + 'px' })),
+      slots: Array.from({ length: H1 - H0 }, (_, i) => ({ top: (i * DPX) + 'px', h: DPX + 'px', onClick: () => this.openEditor(null, s.selDay, H0 + i) })),
+      dayBlocks: vis.filter(b => b.day === s.selDay).map(b => ({
+        ...CATS[b.cat], ...blockVis(b, DPX), title: b.title, time: fmt(b.start) + '–' + fmt(b.end),
+        deco: b.status === 'skipped' ? 'line-through' : 'none',
+        badge: b.status === 'done' ? '✓' : b.status === 'skipped' ? 'pulado' : b.status === 'in_progress' ? 'agora' : '',
+        ring: b.status === 'in_progress' ? '0 0 0 2px ' + CATS[b.cat].base : 'none',
+        onClick: () => this.setState({ sheetId: b.id, sheetReasons: false }),
+      })),
+      showNow: isCurWk && s.selDay === n.day && n.min >= H0 * 60, nowTop: ((n.min / 60 - H0) * DPX) + 'px',
+      weekHeight: ((H1 - H0) * WPX) + 'px',
+      weekHours: Array.from({ length: (H1 - H0) / 3 }, (_, i) => ({ label: pad(H0 + i * 3) + 'h', top: (i * 3 * WPX) + 'px' })),
+      weekCols: DAYS.map((_, i) => ({
+        bg: isCurWk && i === n.day ? 'var(--color-accent-100)' : 'var(--color-neutral-100)',
+        onClick: () => this.setState({ selDay: i, view: 'day' }),
+        blocks: vis.filter(b => b.day === i).map(b => ({ ...CATS[b.cat], ...blockVis(b, WPX) })),
+      })),
+      legend: Object.values(CATS),
+
+      ctxLabel: week.length + ' blocos no contexto',
+      aiPill: s.gKey ? { label: 'Gemini · ' + s.gModel, bg: 'var(--color-accent-2-200)', color: 'var(--color-accent-2-900)', dot: 'var(--color-accent-2-600)' }
+        : { label: 'Modo local · conectar Gemini', bg: 'var(--color-accent-200)', color: 'var(--color-accent-900)', dot: 'var(--color-accent-600)' },
+      openSettings: () => this.setState({ settingsOpen: true, keyDraft: s.gKey, modelDraft: s.gModel, models: s.gModel ? [{ id: s.gModel }] : [], settingsMsg: '' }),
+      closeSettings: () => this.setState({ settingsOpen: false }),
+      settingsOpen: s.settingsOpen, keyDraft: s.keyDraft, modelDraft: s.modelDraft, models: s.models,
+      hasModels: s.models.length > 0, noModels: s.models.length === 0, hasKey: !!s.gKey,
+      hasSettingsMsg: !!s.settingsMsg, settingsMsg: s.settingsMsg, testLabel: s.testing ? 'Verificando…' : 'Verificar chave',
+      onKey2: e => this.setState({ keyDraft: e.target.value, models: [], settingsMsg: '' }),
+      onModel: e => this.setState({ modelDraft: e.target.value }),
+      testKey: () => this.testKey(), saveAI: () => this.saveAI(), disconnectAI: () => this.disconnectAI(),
+      msgs: s.messages.map(m => ({
+        text: m.text, hasText: !!m.text, align: m.role === 'user' ? 'flex-end' : 'flex-start',
+        bg: m.role === 'user' ? 'var(--color-accent-600)' : 'var(--color-surface)', color: m.role === 'user' ? '#fff' : 'var(--color-text)',
+        hasCard: !!m.card, card: m.card ? { op: 1, ...m.card, isNav: m.card.kind === 'nav' } : {},
+        onUndo: () => m.card && this.undo(m.card.actionId), onConfirm: () => m.card && this.confirm(m.card.actionId), onDiscard: () => m.card && this.discard(m.card.actionId),
+      })),
+      typing: s.typing, input: s.input,
+      onInput: e => this.setState({ input: e.target.value }),
+      onKey: e => { if (e.key === 'Enter') this.send(); },
+      send: () => this.send(),
+      suggestions: ['O que tenho agora?', 'Adia implementação 30 min', 'Cria estudo de Kafka amanhã às 22h', 'Anota: índice parcial no Postgres', 'Abre o CHECK'].map(label => ({ label, onClick: () => this.send(label) })),
+
+      weekRange: DAYS[0] + ' ' + dateOf(0).getDate() + ' — ' + DAYS[6] + ' ' + dateOf(6).getDate() + ' ' + MONTHS[dateOf(6).getMonth()],
+      metrics: {
+        rate: (closed ? Math.round(doneN / closed * 100) : 0) + '%', skipped: skips.length, hasSkips: skips.length > 0,
+        skips: skips.map(b => ({ title: b.title, day: DAYS[b.day], reason: b.reason || '—' })),
+        cats: Object.entries(CATS).map(([k, c]) => {
+          const all = week.filter(b => b.cat === k); let p = all.reduce((a, b) => a + b.end - b.start, 0);
+          let d = all.filter(b => b.status === 'done').reduce((a, b) => a + b.end - b.start, 0);
+          const rec = k === 'recovery'; if (rec) { p += freeAll + lowE; d += freeEl + lowE; }
+          return { ...c, plan: p ? dur(p) : '0h', done: d ? dur(d) : '0h', pct: (p ? Math.round(d / p * 100) : 0) + '%', hasNote: rec, note: 'Inclui ' + (freeAll ? dur(freeAll) : '0h') + ' livres (fora 8h de sono/dia) na semana' + (lowE ? ' e ' + dur(lowE) + ' puladas por energia baixa' : '') };
+        }),
+      },
+      checklist: s.checklist.map((c, i) => ({
+        label: c.l, mark: c.done ? '✓' : '', deco: c.done ? 'line-through' : 'none',
+        boxBg: c.done ? 'var(--color-accent-2-600)' : 'transparent', boxBorder: c.done ? 'var(--color-accent-2-600)' : 'var(--color-neutral-400)',
+        onClick: () => this.setState(st => ({ checklist: st.checklist.map((x, j) => j === i ? { ...x, done: !x.done } : x) })),
+      })),
+      answers: s.answers,
+      onAnsA: e => this.setState({ answers: { ...s.answers, a: e.target.value } }),
+      onAnsB: e => this.setState({ answers: { ...s.answers, b: e.target.value } }),
+      onAnsC: e => this.setState({ answers: { ...s.answers, c: e.target.value } }),
+      notes: s.notes.map(x => ({ text: x.text, meta: x.kind + ' · ' + DAYS[x.day] + (x.link ? ' · ' + x.link : '') })),
+      reviewBtn: s.reviewDone ? 'CHECK concluído ✓' : 'Concluir CHECK',
+      onFinishReview: () => this.setState({ reviewDone: true }),
+
+      showMonth: ms.show, month: { ...ms, title: 'Resumo de ' + ms.name, cap: ms.name[0].toUpperCase() + ms.name.slice(1) },
+      monthOpen: s.monthOpen, openMonth: () => this.setState({ monthOpen: true }), closeMonth: () => this.setState({ monthOpen: false }),
+      seeMonth: () => this.markMonthSeen(ms.key),
+      hasSheet: !!sheetB, closeSheet: () => this.setState({ sheetId: null }), stop: e => e.stopPropagation(),
+      sheet: sheetB ? {
+        ...CATS[sheetB.cat], catLabel: CATS[sheetB.cat].label, title: sheetB.title,
+        time: DAYS_L[sheetB.day] + ', ' + fmt(sheetB.start) + '–' + fmt(sheetB.end) + (sheetB.reason ? ' · ' + sheetB.reason : ''),
+        opts: Object.entries(STATUS).map(([k, label]) => {
+          const on = sheetB.status === k || (k === 'skipped' && s.sheetReasons);
+          return { label, bg: on ? 'var(--color-accent-500)' : 'var(--color-neutral-100)', color: on ? '#fff' : 'var(--color-text)', border: on ? 'var(--color-accent-500)' : 'transparent', onClick: () => k === 'skipped' ? this.setState({ sheetReasons: true }) : this.setStatus(sheetB.id, k) };
+        }),
+        showReasons: s.sheetReasons,
+        reasons: REASONS.map(label => ({ label, onClick: () => this.setStatus(sheetB.id, 'skipped', label) })),
+        onDelay: () => { const cf = this.conflicts(s.blocks, sheetB.day, sheetB.start + 30, sheetB.end + 30, sheetB.id); if (!cf.length) this.patch(sheetB.id, { start: sheetB.start + 30, end: sheetB.end + 30 }); else alert('Conflito com "' + cf[0].title + '"'); },
+        onCancel: () => this.askDel(sheetB.id), onEdit: () => this.openEditor(sheetB),
+        isRec: !!sheetB.rid, recLabel: (() => { const r = s.rules.find(x => x.id === sheetB.rid); return r ? 'Repete toda semana · ' + r.days.map(d => DAYS[d]).join(', ') : ''; })(),
+      } : {},
+      hasDelAsk: !!s.delAsk, delOne: () => this.delRec(s.delAsk, false), delFuture: () => this.delRec(s.delAsk, true), delCancel: () => this.setState({ delAsk: null }),
+      hasEditor: !!s.edit, closeEditor: () => this.setState({ edit: null }),
+      ed: s.edit ? {
+        heading: s.edit.id ? 'Editar bloco' : 'Novo bloco', title: s.edit.title, start: s.edit.start, end: s.edit.end, err: s.edit.err, hasErr: !!s.edit.err, isEdit: !!s.edit.id,
+        onTitle: e => this.setState({ edit: { ...s.edit, title: e.target.value, err: '' } }),
+        onStart: e => this.setState({ edit: { ...s.edit, start: e.target.value, err: '' } }),
+        onEnd: e => this.setState({ edit: { ...s.edit, end: e.target.value, err: '' } }),
+        onTitleKey: e => { if (e.key === 'Enter') this.saveEditor(); },
+        cats: Object.entries(CATS).map(([k, c]) => { const on = s.edit.cat === k; return { label: c.label, dot: c.base, bg: on ? c.bg : 'var(--color-neutral-100)', color: on ? c.ink : 'var(--color-text)', border: on ? c.base : 'transparent', onClick: () => this.setState({ edit: { ...s.edit, cat: k } }) }; }),
+        isRec: !!s.edit.rid,
+        scopes: [['one', 'Só este'], ['future', 'Este e os próximos']].map(([k, label]) => { const on = s.edit.scope === k; return { label, bg: on ? 'var(--color-accent-2-600)' : 'var(--color-neutral-100)', color: on ? '#fff' : 'var(--color-text)', onClick: () => this.setState({ edit: { ...s.edit, scope: k, err: '' } }) }; }),
+        showRep: !(s.edit.rid && s.edit.scope === 'one'),
+        reps: [['none', 'Não repete'], ['weekly', 'Toda semana']].map(([k, label]) => { const on = s.edit.rep === k; return { label, bg: on ? 'var(--color-accent-500)' : 'var(--color-neutral-100)', color: on ? '#fff' : 'var(--color-text)', onClick: () => this.setState({ edit: { ...s.edit, rep: k, days: k === 'weekly' ? (s.edit.days.length > 1 ? s.edit.days : [s.edit.day]) : s.edit.days, err: '' } }) }; }),
+        weekly: s.edit.rep === 'weekly' && !(s.edit.rid && s.edit.scope === 'one'),
+        dayLabel: s.edit.rep === 'weekly' && !(s.edit.rid && s.edit.scope === 'one') ? 'Repete em' : 'Dia',
+        presets: [['Seg a Sex', [0, 1, 2, 3, 4]], ['Todos os dias', [0, 1, 2, 3, 4, 5, 6]], ['Fim de semana', [5, 6]]].map(([label, ds]) => ({ label, onClick: () => this.setState({ edit: { ...s.edit, days: ds, err: '' } }) })),
+        repHint: s.edit.id ? 'As mudanças valem a partir deste dia.' : 'Cria esse bloco em todas as semanas, a partir de hoje.',
+        days: DAYS.map((label, i) => {
+          const multi = s.edit.rep === 'weekly' && !(s.edit.rid && s.edit.scope === 'one');
+          const on = multi ? s.edit.days.includes(i) : s.edit.day === i;
+          return { label, bg: on ? 'var(--color-accent-500)' : 'var(--color-neutral-100)', color: on ? '#fff' : 'var(--color-text)',
+            onClick: () => this.setState({ edit: { ...s.edit, err: '', ...(multi ? { days: on ? s.edit.days.filter(x => x !== i) : [...s.edit.days, i] } : { day: i }) } }) };
+        }),
+        onSave: () => this.saveEditor(), onDelete: () => this.askDel(s.edit.id),
+      } : {},
+    };
+  }
+}
+</script>
+</body>
+</html>
